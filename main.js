@@ -1,8 +1,7 @@
 const GRAV = 6.67428e-11;
 const AU = (149.6e6 * 1000);
 const SCALE = 250 / AU;
-const TIME = 24 * 3600;
-// const DIST = 40;
+const TIME = 1/60;// 24 * 3600;
 
 const planets = [];
 
@@ -40,7 +39,7 @@ class Planet {
         yForce += force * sin(angle);
       }
     }
-    
+
     return [xForce, yForce];
   }
 
@@ -71,10 +70,16 @@ function setup() {
 
   // Sun
   planets.push(new Planet(0, 0, 0, 0, 50, 1.9891e30));
+  // Mercury
+  planets.push(new Planet(0, 0.387 * AU, 47.87 * 1000, 0, 7, 3.3022e23));
   // Venus
   planets.push(new Planet(0.723 * AU, 0, 0, -35.02 * 1000, 10, 4.868e24));
   // Earth
   planets.push(new Planet(-1 * AU, 0, 0, 29.783 * 1000, 20, 5.9736e20));
+
+  // const ship = new Planet(AU, AU, -299792458 * 1024, 0, 5, 700000 * 1000);
+
+  // planets.push(ship);
 }
 
 function draw() {
@@ -88,12 +93,15 @@ function draw() {
   }
 
   background(0);
-  
+
   translate((width / 2), (height / 2));
-  
+
   for (let i = 0, len = planets.length; i < len; i++) {
     planets[i].drawPlanet();
   }
+  
+  fill(255);
+  text(floor(frameRate()), (-width / 2) + 10, 10);
 
   console.log(`X = ${planets[0].x}`);
   console.log(`Y = ${planets[0].y}`);
